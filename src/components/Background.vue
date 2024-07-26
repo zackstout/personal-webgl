@@ -10,16 +10,22 @@ import {
 } from "vue";
 import * as THREE from "three";
 // Must update vite.config to use glsl imports
-import vertexShader from "./shaders/dots/vertex.glsl";
-import fragmentShader from "./shaders/dots/fragment.glsl";
+import vertexShader from "./shaders/journey/vertex.glsl";
+import fragmentShader from "./shaders/journey/fragment.glsl";
 
 const bg = ref<HTMLDivElement | null>(null);
 
 let canvas: HTMLCanvasElement;
 
+const props = defineProps<{
+  progress: number;
+}>();
+
 // ====================
 
-const color = new THREE.Color("rgb(30, 30, 30)");
+const color = new THREE.Color("rgb(10, 10, 10)");
+
+let caf: any = null;
 
 function initialize(isUpdating?: boolean) {
   if (bg.value != null) {
@@ -28,7 +34,7 @@ function initialize(isUpdating?: boolean) {
       bg.value?.appendChild(canvas);
     }
 
-    console.log("Init,", color);
+    // console.log("Init,", color);
 
     canvas.width = window.innerWidth * window.devicePixelRatio;
     canvas.height = window.innerHeight * window.devicePixelRatio;
@@ -57,6 +63,7 @@ function initialize(isUpdating?: boolean) {
       uniforms: {
         uTime: new THREE.Uniform(0),
         uAspect: new THREE.Uniform(aspectRatio),
+        uProgress: new THREE.Uniform(props.progress),
       },
       transparent: true,
     });
@@ -92,18 +99,26 @@ function initialize(isUpdating?: boolean) {
       const elapsedTime = clock.getElapsedTime();
 
       material.uniforms.uTime.value = elapsedTime;
+      material.uniforms.uProgress.value = props.progress;
 
       // Render
       renderer.render(scene, camera);
 
       //   if (store.options.animate) {
       //     // Call tick again on the next frame
-      //     window.requestAnimationFrame(tick);
+      caf = window.requestAnimationFrame(tick);
       //   }
     };
 
+    // some change?
     tick();
   }
+
+  onBeforeUnmount(() => {
+    if (caf) {
+      window.cancelAnimationFrame(caf);
+    }
+  });
 }
 
 const bgStyle = computed<StyleValue>(() => {
@@ -119,12 +134,18 @@ const bgStyle = computed<StyleValue>(() => {
 
 function updateBG() {
   initialize(true);
+  console.log("call updateBG");
 }
 
 onMounted(() => {
   initialize();
   window.addEventListener("resize", updateBG);
-  console.log("Mounted");
+  // console.log("Mounted");
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateBG);
+  window.cancelAnimationFrame();
 });
 </script>
 <template>
