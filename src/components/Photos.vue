@@ -118,9 +118,10 @@ const photosDict = [
   },
 ];
 
+// @ts-ignore
 const flagIcons = [...new Set(photosDict.map((d) => d.flag))];
 
-const flagDict = {
+const flagDict: Record<string, string> = {
   "🇺🇸": "usa",
   "🇮🇹": "italia",
   "🇫🇷": "france",

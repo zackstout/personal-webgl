@@ -38,7 +38,7 @@ const currentPath = ref(window.location.hash);
 
 window.addEventListener("hashchange", () => {
   currentPath.value = window.location.hash;
-  console.log("ash", window.location.hash, currentPath.value.slice(1));
+  // console.log("ash", window.location.hash, currentPath.value.slice(1));
 });
 
 const currentView = computed(() => {
@@ -47,7 +47,7 @@ const currentView = computed(() => {
   //   return Journey;
   // }
 
-  console.log("curr path...", currentPath.value);
+  // console.log("curr path...", currentPath.value);
 
   if (journeyParts.some((p) => currentPath.value.includes(p))) {
     return Journey;

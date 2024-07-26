@@ -16,6 +16,6 @@ const renderVue = (): Promise<unknown> => {
   return Promise.resolve();
 };
 
-eventBus.on("render", renderVue);
+// eventBus.on("render", renderVue);
 
 renderVue();
