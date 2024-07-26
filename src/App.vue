@@ -47,6 +47,8 @@ const currentView = computed(() => {
   //   return Journey;
   // }
 
+  console.log("curr path...", currentPath.value);
+
   if (journeyParts.some((p) => currentPath.value.includes(p))) {
     return Journey;
   }

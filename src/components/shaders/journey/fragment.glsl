@@ -252,7 +252,6 @@ void main()
     float ms2 = smoothstep(t + mtnTransition, t, uProgress);
 
 
-
     // Vaporwave sun:
     vec3 gold = vec3(.8, .5, .2); // gold
     vec3 mag = vec3(.9, .1, .9); // mag
@@ -372,8 +371,8 @@ void main()
     // tree = mix(tree, treeBg, (ts1 - ts2) * 8. + uv.y * 2.);
 
     // Cutting between bark tree and tree mosss stuff ..
-    // Note that 2.5 doesn't quite work on SD, to show both
-    tree = mix(tree, treeBg, step(uv.x + uv.y, 2.5 + (pow(ts1, .3) - ts2) * 20.));
+    // Note that 2.5 doesn't quite work on SD, to show both -- changing to 3 to tarnsition to wood faster
+    tree = mix(tree, treeBg, step(uv.x + uv.y, 5.2 + (pow(ts1, .3) - ts2) * 20.));
 
 
     c += tree * ts1 * ts2;
@@ -472,7 +471,28 @@ void main()
     float ds1 = smoothstep(diveTime - diveTransition, diveTime, uProgress);
     float ds2 = smoothstep(diveTime + diveTransition, diveTime, uProgress);
 
+
+    vec3 deep = vec3(.05, .05, .3);
+
+    vec3 mid = vec3(.1, .15, .35);
+
+    float waterCut = .5 + sin(uv.x * .9) * (.2 + uProgress * .1);
+    waterCut = step(waterCut, .4 + ds2 - uv.y);
+
+
     vec3 dive = vec3(uv, .5);
+    dive = deep;
+
+    // dive = mix(deep, mid, waterCut);
+
+    for (int i=0; i < 14; i++){
+        float freq = rand(vec2(float(i) / 2.)) * pow(uProgress, 1.1) * ds1;
+        float wc = .5 + sin(uv.x * freq * float(i)) * (rand(vec2(i)) + uProgress * 1.2 * (rand(vec2(i + 1))));
+        wc = step(wc, .1 * float(i) / 14. + (uProgress - .6) * 4. - uv.y);
+
+        float brightness = .2 + .6 * float(i) / 6.;
+        dive = mix(dive, mid * brightness, wc);
+    }
     c += dive * ds1 * ds2;
 
 

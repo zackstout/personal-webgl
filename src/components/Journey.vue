@@ -5,10 +5,10 @@ import { onMounted, ref } from "vue";
 import Background from "./Background.vue";
 import gsap from "gsap";
 
+// TODO: "make "scroll on to ..." a button to go next"
+
 // @ts-ignore
 import ScrollToPlugin from "../utils/ScrollToPlugin.js";
-// @ts-ignore
-import ScrollSmoother from "../utils/ScrollSmoother.js";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -18,18 +18,8 @@ const scrollWrapper = ref(null);
 
 const progress = ref(0);
 
-// const smoother = ScrollSmoother.create();
-
 // TODO: Pass into Background shader
 function scrollListen(ev: Event) {
-  // @ts-ignore
-  // console.log(
-  //   "scroll heard",
-  //   ev.target?.scrollTop,
-  //   ev.target.getBoundingClientRect().height,
-  //   mainContent.value?.getBoundingClientRect().height
-  // );
-  console.log("scroll listen...");
   // @ts-ignore
   const mainHeight = mainContent.value?.getBoundingClientRect().height;
   progress.value = (ev.target as any)?.scrollTop / mainHeight;
@@ -37,16 +27,14 @@ function scrollListen(ev: Event) {
 const myName = "Zack Stout".toUpperCase().split("");
 
 function clickIcon(id: string) {
-  //   gsap.scrollTo(`#${i}`);
-  // console.log("click star");
-  //   window.scrollTo({ top: 1000, behavior: "smooth" });
-  //   gsap.to(mainContent.value, { scrollTo: { y: "#stars" } });
-  //   smoother.scrollTo("#stars", true, "top 0px");
-  //   gsap.to(mainContent.value, { duration: 1, scrollTo: "#stars" });
-  //   gsap.to(mainContent.value, { y: "-=100" });
   gsap.to(scrollWrapper.value, { scrollTo: `#${id}` });
-  // window.scrollTo({top: 500, left: 0, behavior: "smooth"});
 }
+
+onMounted(() => {
+  eventBus.on("scrollTop", () => {
+    clickIcon("start");
+  });
+});
 </script>
 
 <template>
@@ -185,10 +173,21 @@ function clickIcon(id: string) {
         <p class="text-5xl font-bold uppercase">Forests</p>
         <p class="text-2xl">Growth, and finding patterns</p>
         <p class="text-md leading-tight">
-          🌳 I love the trees of nature -- reaching for the sky, rooted in the
-          soil, branching in chaotic but ordered ways, spreading leaves and
-          gulping sunlight.
+          🌳 I love trees: earth-rooted, but reaching toward the sky, gulping
+          sunlight and radiating leaves.
         </p>
+
+        <p>
+          And I love forests: systems of interconnected components, each part
+          playing its role in harmony with the others.
+        </p>
+
+        <p>
+          Software is like a forest, rooted in the soil of human concerns. Like
+          sunlight, technical rigor brings clarity, which allows us to solve
+          problems and serve our communities.
+        </p>
+        <p>We are guided by the gentle tendrils of our imaginations.</p>
 
         <!-- <p>
           And I love mathematical trees -- fractals and data structures and
@@ -197,7 +196,7 @@ function clickIcon(id: string) {
           to pounce.
         </p> -->
 
-        <p>
+        <!-- <p>
           Working in software has been a dream come true. We are rooted in
           <b>human concerns</b>, yet we stretch toward
           <b>technical purity</b> and the <b>heights of imagination</b>.
@@ -205,8 +204,19 @@ function clickIcon(id: string) {
 
         <p>
           I love that in software, we don't have to choose between the forest
-          and the lumber. Beauty infuses the functional experience.
-        </p>
+          and the lumber. Beauty infuses and complements the functional
+          experience.
+        </p> -->
+
+        <!-- <p>
+          And it's cheap to build things: you don't run out of paints or
+          linoleum. You are free to plant a hundred trees.
+        </p> -->
+        <!-- 
+        <p>
+          In software we build forests: systems of interconnected components,
+          each part playing its role in harmony with the others.
+        </p> -->
       </div>
 
       <!-- Fourth section: -->
@@ -273,26 +283,31 @@ function clickIcon(id: string) {
       </div>
 
       <!-- Sixth section: -->
-      <div id="depths" class="section">
+      <div id="depths" class="section mb-40">
         <p class="text-5xl font-bold uppercase">The Depths</p>
         <p class="text-2xl">Diving below</p>
         <p class="text-md leading-tight">
           🤿 One of my greatest joys has been learning to scuba dive. It is
-          incredible to be able to explore coral reefs. Corals exhibit
-          incredible patterns, and fish are so fun to swim with. Underwater, I
-          have learned to truly relax and perceive my surroundings.
+          incredible to explore coral reefs. Corals exhibit amazing patterns,
+          and fish are so fun to swim with. Underwater, I have learned to truly
+          relax and perceive my surroundings.
         </p>
 
         <p>
-          As we descend, what will we find? As with most journeys, we find
-          ourselves back home where we started -- but deepened, enriched. The
-          marrow we have deposited becomes loam in the next cycle.
+          As we descend, what will we find? Usually, we find ourselves back home
+          where we started -- but deepened, enriched. The marrow we have
+          deposited becomes loam in the next cycle.
         </p>
 
-        <p>In our darkest moments... the light returns.</p>
+        <p>In our darkest moments, the light returns.</p>
       </div>
 
-      <a class="absolute bottom-16" href="#start"> Return to Top </a>
+      <div
+        class="absolute bottom-16 rounded-md border border-white px-3 py-1 opacity-80 hover:opacity-100 cursor-pointer"
+        @click="clickIcon('start')"
+      >
+        Return to Top
+      </div>
     </div>
   </div>
 </template>
