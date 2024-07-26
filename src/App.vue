@@ -17,6 +17,8 @@ import gsap from "gsap";
 //   ev.target.parentElement.scrollTop = 0;
 // };
 
+//
+
 const journeyParts = [
   "start",
   "stars",
