@@ -237,7 +237,7 @@ void main()
    
 
    // Mountains
-    float mtnTime = timeInterval * 2.;
+    float mtnTime = timeInterval * 1.9;
     float mtnTransition = .1;
     
     vec2 uvC = uv;
@@ -370,6 +370,9 @@ void main()
 
     // Lol cool but not quite...
     // tree = mix(tree, treeBg, (ts1 - ts2) * 8. + uv.y * 2.);
+
+    // Cutting between bark tree and tree mosss stuff ..
+    // Note that 2.5 doesn't quite work on SD, to show both
     tree = mix(tree, treeBg, step(uv.x + uv.y, 2.5 + (pow(ts1, .3) - ts2) * 20.));
 
 
@@ -378,7 +381,7 @@ void main()
    // ======================================================
 
     // Village
-    float villageTime = timeInterval * 4.;
+    float villageTime = timeInterval * 3.6;
     float villageTransition = .1;
     float vs1 = smoothstep(villageTime - villageTransition, villageTime, uProgress);
     float vs2 = smoothstep(villageTime + villageTransition, villageTime, uProgress);
@@ -398,7 +401,6 @@ void main()
     // Also love this, cactus cities
     float cityY = snoise(vec3(uv.x * 10., 1., 1.)) * 3.;
     
-
     float pp = uProgress * 3.;
 
     cityY = snoise(vec3(floor(uv.x * 100. + 50. * cos(pp * .1)) * (.02 + .01 * cos(pp * .2)), 2., 3. + .2 * cos(pp))* 3.);
@@ -410,18 +412,62 @@ void main()
    // ======================================================
 
     // Tide Pools
-    float tideTime = timeInterval * 5.;
+    // Huh should be 5. ... but want to make city disappear faster
+    float tideTime = timeInterval * 4.5;
     float tideTransition = .1;
     float tps1 = smoothstep(tideTime - tideTransition, tideTime, uProgress);
     float tps2 = smoothstep(tideTime + tideTransition, tideTime, uProgress);
 
+
+
     vec3 tide = vec3(uv, .5);
+    vec3 slate = vec3(.44, .5, .86);
+    vec3 seaweed = vec3(.2, .5, .1);
+    vec3 cerulean = vec3(0., .48, .65);
+    vec3 slate2 = vec3(.2, .3, .3);
+
+
+    float rockyNoise = snoise(vec3(uv * 15., .5));
+    rockyNoise = step(rockyNoise, .6);
+    vec3 rock = mix(seaweed, slate2, rockyNoise);
+
+    float edgeNoise = snoise(vec3(uv.y * 70., 1., 2.));
+    edgeNoise += snoise(vec3(uv.y * 2., 3., 4. + uProgress * 2.)) * 7.;
+
+    // For tide pools on left, uv.x - 1.4 was good here
+    edgeNoise = step(edgeNoise * .005, uv.x - 1.);
+    vec3 bg = mix(seaweed, vec3(1.) - vec3(.8,.8,.9), edgeNoise);
+
+    float bgNoise = snoise(vec3(uv * 4., 1.));
+    bgNoise += snoise(vec3(uv * 10., 2. + uProgress * 3.)) * (tps1);
+    bgNoise = pow(bgNoise, 3.);
+    bgNoise = abs(bgNoise);
+    bgNoise = smoothstep(.25, .26, bgNoise);
+    // Brighten pools slightly vs the ocean color
+    tide = mix(rock, cerulean * 1.1, bgNoise);
+
+    vec3 edge = vec3(1.) - vec3(.8, .8, .9);
+    float waterNoise = snoise(vec3(uv * 4., 1. + uProgress * 5.));
+    waterNoise += snoise(vec3(uv * 60., 3. + uProgress * 2.));
+    waterNoise = step(waterNoise, 1.2);
+
+    // Add pink to clouds
+    vec3 cloud = vec3(1.);
+    cloud = mix(cloud, vec3(1., .8, .8), rand(floor(uv * 8.)));
+
+  // TODO: add a touch of green to ocean 
+    edge = mix(cloud, cerulean, waterNoise);
+
+    // Make it so tide pools are on right, not competing with text
+    // tide = mix(tide, edge, edgeNoise);
+    tide = mix(edge, tide, edgeNoise);
+
     c += tide * tps1 * tps2;
 
    // ======================================================
 
     // Depths
-    float diveTime = timeInterval * 6.;
+    float diveTime = timeInterval * 5.5;
     float diveTransition = .1;
     float ds1 = smoothstep(diveTime - diveTransition, diveTime, uProgress);
     float ds2 = smoothstep(diveTime + diveTransition, diveTime, uProgress);

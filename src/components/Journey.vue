@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { eventBus } from "../eventbus";
 import { onMounted, ref } from "vue";
+// @ts-ignore
 import Background from "./Background.vue";
+import gsap from "gsap";
+
+// @ts-ignore
+import ScrollToPlugin from "../utils/ScrollToPlugin.js";
+// @ts-ignore
+import ScrollSmoother from "../utils/ScrollSmoother.js";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const mainContent = ref(null);
 
+const scrollWrapper = ref(null);
+
 const progress = ref(0);
+
+// const smoother = ScrollSmoother.create();
 
 // TODO: Pass into Background shader
 function scrollListen(ev: Event) {
@@ -16,10 +29,24 @@ function scrollListen(ev: Event) {
   //   ev.target.getBoundingClientRect().height,
   //   mainContent.value?.getBoundingClientRect().height
   // );
+  console.log("scroll listen...");
+  // @ts-ignore
   const mainHeight = mainContent.value?.getBoundingClientRect().height;
   progress.value = (ev.target as any)?.scrollTop / mainHeight;
 }
 const myName = "Zack Stout".toUpperCase().split("");
+
+function clickIcon(id: string) {
+  //   gsap.scrollTo(`#${i}`);
+  // console.log("click star");
+  //   window.scrollTo({ top: 1000, behavior: "smooth" });
+  //   gsap.to(mainContent.value, { scrollTo: { y: "#stars" } });
+  //   smoother.scrollTo("#stars", true, "top 0px");
+  //   gsap.to(mainContent.value, { duration: 1, scrollTo: "#stars" });
+  //   gsap.to(mainContent.value, { y: "-=100" });
+  gsap.to(scrollWrapper.value, { scrollTo: `#${id}` });
+  // window.scrollTo({top: 500, left: 0, behavior: "smooth"});
+}
 </script>
 
 <template>
@@ -27,21 +54,30 @@ const myName = "Zack Stout".toUpperCase().split("");
 
   <div
     class="w-full overflow-scroll absolute inset-0 z-10"
+    ref="scrollWrapper"
     @scroll="scrollListen"
   >
     <!-- Left icon sidebar: -->
     <div
-      class="fixed left-0 top-0 h-full w-32 flex flex-col items-center justify-center space-y-4"
+      class="fixed left-0 top-0 h-full w-24 flex flex-col items-center justify-center space-y-4"
     >
       <!-- Oooh but not quite... we don't want it at top... I guess we could use same padding hack... or just go to GSAP and/or compute..?? -->
       <!-- Yes padding works! -->
       <!-- <a class="icon" href="#start">H</a> -->
-      <a class="icon" href="#stars">S</a>
-      <a class="icon" href="#mountains">M</a>
-      <a class="icon" href="#forests">F</a>
-      <a class="icon" href="#villages">V</a>
-      <a class="icon" href="#tidepools">T</a>
-      <a class="icon" href="#depths">D</a>
+
+      <!-- Huh not working... -->
+      <div class="icon" @click="clickIcon('stars')">✨</div>
+      <div class="icon" @click="clickIcon('mountains')">⛰️</div>
+      <div class="icon" @click="clickIcon('forests')">🌳</div>
+      <div class="icon" @click="clickIcon('villages')">🏛️</div>
+      <div class="icon" @click="clickIcon('tidepools')">🔍</div>
+      <div class="icon" @click="clickIcon('depths')">🤿</div>
+      <!-- <a class="icon" href="#stars">✨</a> -->
+      <!-- <a class="icon" href="#mountains">⛰️</a>
+      <a class="icon" href="#forests">🌳</a>
+      <a class="icon" href="#villages">🏙️</a>
+      <a class="icon" href="#tidepools">🔍</a>
+      <a class="icon" href="#depths">🤿</a> -->
     </div>
 
     <!-- Main content: -->
@@ -52,22 +88,25 @@ const myName = "Zack Stout".toUpperCase().split("");
       <!-- Intro section (put top padding here so we can jump here via link): -->
       <div id="start" class="section">
         <p class="text-5xl font-bold uppercase">
-          <span v-for="c in myName">{{ c }}</span>
+          <!-- <span v-for="c in myName" :key="c">{{ c }}</span> -->
+          {{ myName.join("") }}
         </p>
         <p class="text-2xl opacity-90">Creative Developer</p>
-        <p class="text-md leading-tight opacity-80">
-          👋 Thanks for stopping by! I feel very lucky to have found the field
-          of web development, where logical rigor runs alongside creative
-          expression. I'm always looking for new ways to combine these two
-          aspects of my personality.
-        </p>
+        <div class="leading-tight opacity-80 flex flex-col space-y-3">
+          <p>👋 Thanks for stopping by!</p>
+          <p>
+            I feel very lucky to have found the field of web development, where
+            logical rigor flows alongside creative expression.
+            <!-- I'm always looking for new ways to combine these two
+          aspects of my personality. -->
+          </p>
 
-        <p class="text-md leading-tight opacity-80">
-          I'm currently working as a front-end developer in Minneapolis. I love
-          being with my dog, playing music, and exploring the outdoors.
-        </p>
-
-        <p>Scroll on to learn more about my journey in software.</p>
+          <p>
+            I'm currently working as a front-end developer in Minneapolis. I
+            love being with my dog, playing music, and exploring the outdoors.
+          </p>
+          <b>Scroll on to learn more about my journey in software.</b>
+        </div>
       </div>
 
       <!-- First section: -->
@@ -87,8 +126,9 @@ const myName = "Zack Stout".toUpperCase().split("");
 
         <div class="leading-tight opacity-80 flex flex-col space-y-3">
           <p>
-            ✨ My educational journey began with philosophy and mathematics. In
-            a way, both of these romances began with the stars.
+            ✨ My educational journey began with
+            <b>philosophy and mathematics</b>. In a way, both of these romances
+            began with the stars.
           </p>
 
           <p>The night sky inspires wonder. It leads to mystery and myth.</p>
@@ -108,7 +148,7 @@ const myName = "Zack Stout".toUpperCase().split("");
       <!-- Second section: -->
       <div id="mountains" class="section">
         <p class="text-5xl font-bold uppercase">Mountains</p>
-        <p class="text-2xl">A Rocky Ascent</p>
+        <p class="text-2xl">A rocky ascent</p>
         <!-- <p class="text-md leading-tight">
           ⛰️ I love mountains, though I have a perilous fear of heights. I love
           the vistas they afford, and how earned they feel.
@@ -124,18 +164,18 @@ const myName = "Zack Stout".toUpperCase().split("");
 
         <p>
           ⛰️ Learning is a lot like climbing mountains. Fortunately not too
-          alike, because I am mercilessly afraid of heights.
+          alike, because I am terrified of heights.
         </p>
 
         <p>
-          You stumble and slide, but earn each new vista. And with each new
-          vista, new pathways forward open up.
+          You stumble and slide, but you earn each new vista. As you ascend, new
+          pathways open up.
         </p>
 
         <p>
-          I love learning, and learning to code (at boot camp, on my own, and
-          then on the job) has been no different. I love to find new sights, and
-          new ways of seeing.
+          I love to learn, and learning to code (at boot camp, on my own, and
+          then on the job) has been no exception. I thrill at drinking in new
+          sights, and new ways of seeing.
         </p>
       </div>
 
@@ -143,42 +183,48 @@ const myName = "Zack Stout".toUpperCase().split("");
       <!-- TODO: this one needs work... doesn't make sense... cut with grain? idk. -->
       <div id="forests" class="section">
         <p class="text-5xl font-bold uppercase">Forests</p>
-        <p class="text-2xl">Growth and Finding Patterns</p>
+        <p class="text-2xl">Growth, and finding patterns</p>
         <p class="text-md leading-tight">
           🌳 I love the trees of nature -- reaching for the sky, rooted in the
           soil, branching in chaotic but ordered ways, spreading leaves and
           gulping sunlight.
         </p>
 
-        <p>
+        <!-- <p>
           And I love mathematical trees -- fractals and data structures and
           decision paths. I love distilling a problem to its clearest and
           simplest representation, thinking it through slowly until it is time
           to pounce.
+        </p> -->
+
+        <p>
+          Working in software has been a dream come true. We are rooted in
+          <b>human concerns</b>, yet we stretch toward
+          <b>technical purity</b> and the <b>heights of imagination</b>.
         </p>
 
         <p>
-          Working in software has been a dream come true. We are rooted in human
-          concerns, yet we stretch toward technical purity and the heights of
-          imagination.
+          I love that in software, we don't have to choose between the forest
+          and the lumber. Beauty infuses the functional experience.
         </p>
       </div>
 
       <!-- Fourth section: -->
-      <div id="villages" class="section">
+      <div id="villages" class="section relative">
+        <!-- <div style="filter: blur(5px)" class="absolute inset-0"></div> -->
         <p class="text-5xl font-bold uppercase">Villages</p>
         <p class="text-2xl">The need for community</p>
         <!-- <p class="text-md leading-tight">
           🫂 I love learning and thinking and working with others.
         </p> -->
         <p>
-          🏙️ No one accomplishes anything alone. I am so grateful for my
+          🏛️ No one accomplishes anything alone. I am so grateful for my
           girlfriend Malika, our dog Apollo, our friends and family.
         </p>
 
         <p>
           I am grateful to work with dedicated and passionate people. I love
-          solving problems and refining ideas with others.
+          solving problems and <b>refining ideas with others</b>.
         </p>
       </div>
 
@@ -194,16 +240,30 @@ const myName = "Zack Stout".toUpperCase().split("");
         </p> -->
 
         <p>
-          🔍 I love exploring microcosms, niches, small obsessions. Music theory
-          and Shakespeare, Greek tragedy and geometric proofs, Renaissance
-          painting history, seabird identification, gardening and hiking and
+          🔍 I love exploring microcosms, niches, small obsessions. I love
+          <a
+            class="p-link"
+            href="https://github.com/zackstout/Music-Theory-Guitar"
+            >music theory</a
+          >
+          and
+          <a class="p-link" href="https://github.com/zackstout/bard"
+            >Shakespeare</a
+          >, Greek tragedy and geometric proofs, Renaissance painting history,
+          seabird identification, gardening and hiking and
           <i>Sonnets to Orpheus</i>.
         </p>
         <p>
-          Flags of the world, checkmating patterns, Lorenz curves, WebGL,
-          tilings of the plane, competitive coding. I love to get lost in small
-          worlds, making connections and building an understanding that I can
-          inhabit.
+          <a class="p-link" href="https://github.com/zackstout/learn-flags"
+            >Flags of the world</a
+          >, checkmating patterns,
+          <a class="p-link" href="https://github.com/zackstout/three-shaders"
+            >WebGL and shaders</a
+          >, tilings of the plane,
+          <a class="p-link" href="https://github.com/zackstout/aoc-2023"
+            >competitive coding</a
+          >. I love to get lost in small worlds, making connections and building
+          an understanding that I can inhabit.
         </p>
 
         <p>
@@ -215,7 +275,7 @@ const myName = "Zack Stout".toUpperCase().split("");
       <!-- Sixth section: -->
       <div id="depths" class="section">
         <p class="text-5xl font-bold uppercase">The Depths</p>
-        <p class="text-2xl">Diving Below</p>
+        <p class="text-2xl">Diving below</p>
         <p class="text-md leading-tight">
           🤿 One of my greatest joys has been learning to scuba dive. It is
           incredible to be able to explore coral reefs. Corals exhibit
@@ -226,12 +286,27 @@ const myName = "Zack Stout".toUpperCase().split("");
         <p>
           As we descend, what will we find? As with most journeys, we find
           ourselves back home where we started -- but deepened, enriched. The
-          marrow we have deposited becomes loam in the next cycle. In our
-          darkest moments, the light returns.
+          marrow we have deposited becomes loam in the next cycle.
         </p>
+
+        <p>In our darkest moments... the light returns.</p>
       </div>
 
       <a class="absolute bottom-16" href="#start"> Return to Top </a>
     </div>
   </div>
 </template>
+
+<style lang="postcss">
+.icon {
+  @apply w-10 h-10 flex items-center justify-center rounded-full border border-white cursor-pointer opacity-90 hover:opacity-100 hover:scale-[1.05] transition-all;
+}
+
+.section {
+  @apply flex flex-col space-y-3 py-[27vh];
+}
+
+.p-link {
+  @apply text-blue-400 underline;
+}
+</style>

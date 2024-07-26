@@ -113,12 +113,6 @@ function initialize(isUpdating?: boolean) {
     // some change?
     tick();
   }
-
-  onBeforeUnmount(() => {
-    if (caf) {
-      window.cancelAnimationFrame(caf);
-    }
-  });
 }
 
 const bgStyle = computed<StyleValue>(() => {
@@ -145,7 +139,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateBG);
-  window.cancelAnimationFrame();
+
+  if (caf) {
+    window.cancelAnimationFrame(caf);
+  }
 });
 </script>
 <template>

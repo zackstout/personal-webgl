@@ -5,6 +5,6 @@ import { onMounted, ref } from "vue";
 
 <template>
   <div class="w-full h-full flex justify-start items-start p-40">
-    <div class="text-5xl uppercase font-bold">blog</div>
+    <div class="text-5xl uppercase font-bold">Oops! not found</div>
   </div>
 </template>

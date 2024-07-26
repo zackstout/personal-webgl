@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { eventBus } from "../eventbus";
 import { onMounted, ref } from "vue";
+
+// TODO: Want to make clicking "ZS" do a scroll. But we need reference to scroll wrapper or.... or no just emit event I guess
 </script>
 
 <template>
@@ -17,10 +19,18 @@ import { onMounted, ref } from "vue";
 
     <!-- Nav: -->
     <div class="flex justify-center items-center space-x-8 text-md uppercase">
-      <div class="cursor-pointer opacity-80 hover:opacity-100">Blog</div>
-      <div class="cursor-pointer opacity-80 hover:opacity-100">Projects</div>
-      <div class="cursor-pointer opacity-80 hover:opacity-100">Resume</div>
-      <div class="cursor-pointer opacity-80 hover:opacity-100">Photos</div>
+      <a href="#/blog" class="cursor-pointer opacity-80 hover:opacity-100"
+        >Blog</a
+      >
+      <a href="#/projects" class="cursor-pointer opacity-80 hover:opacity-100"
+        >Projects</a
+      >
+      <a href="#/resume" class="cursor-pointer opacity-80 hover:opacity-100"
+        >Resume</a
+      >
+      <a href="#/photos" class="cursor-pointer opacity-80 hover:opacity-100"
+        >Photos</a
+      >
       <!-- <div class="cursor-pointer opacity-80 hover:opacity-100">Contact</div> -->
     </div>
   </div>
