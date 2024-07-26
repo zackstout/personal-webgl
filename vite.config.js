@@ -6,7 +6,7 @@ import glsl from "vite-plugin-glsl";
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
-    base: "/",
+    base: "/personal-webgl",
     build: {
       target: "esnext",
     },
