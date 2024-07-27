@@ -53,6 +53,8 @@ onMounted(() => {
       <!-- Yes padding works! -->
       <!-- <a class="icon" href="#start">H</a> -->
 
+      <!-- note/todo: these don't go to sections anymore, like in html -->
+
       <!-- Huh not working... -->
       <div class="icon" @click="clickIcon('stars')">✨</div>
       <div class="icon" @click="clickIcon('mountains')">⛰️</div>
@@ -93,7 +95,8 @@ onMounted(() => {
             I'm currently working as a front-end developer in Minneapolis. I
             love being with my dog, playing music, and exploring the outdoors.
           </p>
-          <b>Scroll on to learn more about my journey in software.</b>
+
+          <p>Scroll on to learn more about my journey in software...</p>
         </div>
       </div>
 
@@ -114,9 +117,8 @@ onMounted(() => {
 
         <div class="leading-tight opacity-80 flex flex-col space-y-3">
           <p>
-            ✨ My educational journey began with
-            <b>philosophy and mathematics</b>. In a way, both of these romances
-            began with the stars.
+            ✨ My educational journey began with philosophy and mathematics. In
+            a way, both of these romances began with the stars.
           </p>
 
           <p>The night sky inspires wonder. It leads to mystery and myth.</p>
@@ -174,20 +176,33 @@ onMounted(() => {
         <p class="text-2xl">Growth, and finding patterns</p>
         <p class="text-md leading-tight">
           🌳 I love trees: earth-rooted, but reaching toward the sky, gulping
-          sunlight and radiating leaves.
+          sunlight and radiating leaves. And I love forests -- systems of
+          interconnected components, each part playing its role in harmony with
+          the others.
         </p>
 
-        <p>
+        <!-- <p>
           And I love forests: systems of interconnected components, each part
           playing its role in harmony with the others.
+        </p> -->
+
+        <p>
+          Software development is kind of like what I imagine managing a forest
+          to be like. You encourage growth here, burn dead areas away there,
+          discourage littering.
         </p>
 
         <p>
+          But in software we don't have to choose between lumber and the forest.
+          The functional experience can be infused with beauty.
+        </p>
+        <p>Let the tendrils of our imaginations guide us.</p>
+        <!-- <p>
           Software is like a forest, rooted in the soil of human concerns. Like
           sunlight, technical rigor brings clarity, which allows us to solve
           problems and serve our communities.
-        </p>
-        <p>We are guided by the gentle tendrils of our imaginations.</p>
+        </p> -->
+        <!-- <p>We are guided by the gentle tendrils of our imaginations.</p> -->
 
         <!-- <p>
           And I love mathematical trees -- fractals and data structures and
@@ -234,7 +249,7 @@ onMounted(() => {
 
         <p>
           I am grateful to work with dedicated and passionate people. I love
-          solving problems and <b>refining ideas with others</b>.
+          solving problems and refining ideas with others.
         </p>
       </div>
 
@@ -310,6 +325,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  <!-- // Use 900 here instead of 400 to increase contrast with water background: -->
 </template>
 
 <style lang="postcss">
@@ -322,6 +338,6 @@ onMounted(() => {
 }
 
 .p-link {
-  @apply text-blue-400 underline;
+  @apply text-blue-900 underline;
 }
 </style>

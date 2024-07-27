@@ -6,7 +6,8 @@ import glsl from "vite-plugin-glsl";
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
-    base: "/personal-webgl",
+    // Hmm this isn't quite right... we also want it to be "" if we are using preview... not sure how to detect
+    base: process.env.NODE_ENV === "development" ? "" : "/personal-webgl",
     build: {
       target: "esnext",
     },

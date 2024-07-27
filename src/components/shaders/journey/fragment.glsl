@@ -178,6 +178,13 @@ void main()
     vec2 uv = vUv;
     uv.x *= uAspect;
 
+    // Used for village and forest
+    vec3 sky = vec3(.7, .8, .9);
+    vec3 darksky = vec3(.2, .2, .9);
+
+    vec3 gold = vec3(.8, .5, .2); // gold
+    vec3 mag = vec3(.9, .1, .9); // mag
+
     vec3 c = vec3(0.0);
 
 // The background that shows for everything and loops through hues
@@ -199,6 +206,13 @@ void main()
     float starTransition = .1;
 
    
+
+
+    if (uProgress < starTime + starTransition){
+       
+    
+
+
     for (int i=0; i < 12; i++){
         // vec2 tgt = vec2(.5 + rand(uv), .5 + rand(uv));
 
@@ -232,6 +246,8 @@ void main()
         // c += vec3(e1 * s1 * s2);
         c += c1 * e1 * s1 * s2;
     }
+
+    }
    
    // ======================================================
    
@@ -239,6 +255,8 @@ void main()
    // Mountains
     float mtnTime = timeInterval * 1.9;
     float mtnTransition = .1;
+
+    if (uProgress < mtnTime + mtnTransition && uProgress > mtnTime - mtnTransition){
     
     vec2 uvC = uv;
     uvC *= 40.;
@@ -253,8 +271,7 @@ void main()
 
 
     // Vaporwave sun:
-    vec3 gold = vec3(.8, .5, .2); // gold
-    vec3 mag = vec3(.9, .1, .9); // mag
+   
 
     vec3 mtn = gold;
     mtn = mix(mtn, mag, uv.y - .2); // subtract more to make more gold
@@ -309,24 +326,21 @@ void main()
     // vec3 mtn = vec3(uv, .5);
     c += mtn * ms1 * ms2;
 
+  }
+
    // ======================================================
 
     // Trees
     float treeTime = timeInterval * 3.;
     float treeTransition = .1;
+
+
+    if (uProgress < treeTime + treeTransition && uProgress > treeTime - treeTransition){
+
     float ts1 = smoothstep(treeTime - treeTransition, treeTime, uProgress);
     float ts2 = smoothstep(treeTime + treeTransition, treeTime, uProgress);
-
-    // Used for village or somethin later
-    vec3 sky = vec3(.7, .8, .9);
-    vec3 darksky = vec3(.2, .2, .9);
-
-
     float timeOffset = cos(uTime * .2 + uv.x * uv.x) * .4;
     vec3 tree = mix(sky, darksky, 1. - uv.y + timeOffset);
-
-
-
     // Changing.... to moss....
     // Ok now let's iterate it....
     // TODO: Not really helping
@@ -348,25 +362,6 @@ void main()
     treeBg.g += treeBg2 * .2;
 
 
-
-
-    // Copy from sun above. Turn into pond....of moss?
-    // Really should use for tide pool though.
-
-    // for (int i=0; i < 4; i++){
-    //     vec2 ctr = vec2(.5 * uAspect, .5);
-    //     ctr.x += rand(vec2(i)) * .2;
-    //     ctr.y += rand(vec2(i+1)) * .2;
-    //     float dPond = distance(uv, ctr);
-    //     float pondSize = .1 + rand(vec2(i)) * .1;
-    //     pondSize = mix(0., pondSize, ts1);
-    //     float distortPond = snoise(vec3(50. * vec2(uv.x * .2 - .5 * uAspect, uv.y - .5), 1.)) * .14;
-    //     pondSize += mix(0., distortPond, 1. - ms2);
-    //     // pondSize -= ts1;
-    //     tree = mix(tree, treeBg, 1. - step(dPond, pondSize));
-    // }
-   
-
     // Lol cool but not quite...
     // tree = mix(tree, treeBg, (ts1 - ts2) * 8. + uv.y * 2.);
 
@@ -376,12 +371,17 @@ void main()
 
 
     c += tree * ts1 * ts2;
+    }
 
    // ======================================================
 
     // Village
     float villageTime = timeInterval * 3.6;
     float villageTransition = .1;
+
+    if (uProgress < villageTime + villageTransition && uProgress > villageTime - villageTransition){
+
+
     float vs1 = smoothstep(villageTime - villageTransition, villageTime, uProgress);
     float vs2 = smoothstep(villageTime + villageTransition, villageTime, uProgress);
 
@@ -408,12 +408,19 @@ void main()
 
     c += village * vs1 * vs2;
 
+    }
+
    // ======================================================
 
     // Tide Pools
     // Huh should be 5. ... but want to make city disappear faster
     float tideTime = timeInterval * 4.5;
     float tideTransition = .1;
+
+
+    if (uProgress < tideTime + tideTransition && uProgress > tideTime - tideTransition){
+
+
     float tps1 = smoothstep(tideTime - tideTransition, tideTime, uProgress);
     float tps2 = smoothstep(tideTime + tideTransition, tideTime, uProgress);
 
@@ -463,11 +470,17 @@ void main()
 
     c += tide * tps1 * tps2;
 
+    }
+
    // ======================================================
 
     // Depths
     float diveTime = timeInterval * 5.5;
     float diveTransition = .1;
+
+
+    if (uProgress < diveTime + diveTransition && uProgress > diveTime - diveTransition){
+
     float ds1 = smoothstep(diveTime - diveTransition, diveTime, uProgress);
     float ds2 = smoothstep(diveTime + diveTransition, diveTime, uProgress);
 
@@ -494,6 +507,8 @@ void main()
         dive = mix(dive, mid * brightness, wc);
     }
     c += dive * ds1 * ds2;
+
+    }
 
 
    // ======================================================

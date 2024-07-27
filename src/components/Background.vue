@@ -96,9 +96,11 @@ function initialize(isUpdating?: boolean) {
     const clock = new THREE.Clock();
 
     const tick = () => {
-      const elapsedTime = clock.getElapsedTime();
+      // We don't really need uTime! I don't know if that will help much but we can cut it
+      // const elapsedTime = clock.getElapsedTime();
 
-      material.uniforms.uTime.value = elapsedTime;
+      // TODO: Maaaaybe only do this if changed??
+      // material.uniforms.uTime.value = elapsedTime;
       material.uniforms.uProgress.value = props.progress;
 
       // Render
