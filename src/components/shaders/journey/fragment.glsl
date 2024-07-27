@@ -201,6 +201,9 @@ void main()
 
     // Because we have 7 sections.
     float timeInterval = 1./7.;
+    timeInterval *= .9;
+
+
 
     // The stars
     float starTime = timeInterval * 1.;
@@ -253,7 +256,7 @@ void main()
    
 
    // Mountains
-    float mtnTime = timeInterval * 1.9;
+    float mtnTime = timeInterval * 2.;
     float mtnTransition = .1;
 
     if (uProgress < mtnTime + mtnTransition && uProgress > mtnTime - mtnTransition){
@@ -349,7 +352,7 @@ void main()
    // ======================================================
 
     // Trees
-    float treeTime = timeInterval * 2.8;
+    float treeTime = timeInterval * 3.;
     float treeTransition = .1;
 
 
@@ -482,7 +485,7 @@ float hillCut = -.6 + pow(ts1, .02) - uv.y;
    // ======================================================
 
     // Village
-    float villageTime = timeInterval * 3.6;
+    float villageTime = timeInterval * 4.;
     float villageTransition = .1;
 
     if (uProgress < villageTime + villageTransition && uProgress > villageTime - villageTransition){
@@ -520,7 +523,7 @@ float hillCut = -.6 + pow(ts1, .02) - uv.y;
 
     // Tide Pools
     // Huh should be 5. ... but want to make city disappear faster
-    float tideTime = timeInterval * 4.5;
+    float tideTime = timeInterval * 5. * .95;
     float tideTransition = .1;
 
 
@@ -582,7 +585,7 @@ float hillCut = -.6 + pow(ts1, .02) - uv.y;
    // ======================================================
 
     // Depths
-    float diveTime = timeInterval * 5.5;
+    float diveTime = timeInterval * 6. * .99;
     float diveTransition = .1;
 
 
