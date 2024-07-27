@@ -103,11 +103,11 @@ const currentView = computed(() => {
 - [ ] projects page, I think will come naturally when you do READMEs
   * - [ ] I think we want text to fade out as it gets toward top, and fade in as it rises from bottom
  * (and vice versa that goes other way)
-
+- [ ] Makes crolling at the bottom rotate the stars or something
 
 
 // EASY
-- [ ] add contact to resume, and some tagline i guess about freelance openness
+- [x] add contact to resume, and some tagline i guess about freelance openness
 - [ ] add bullets to resume where you clarify what you do/have done at SF
   - [x] header tab should be highlighted when active. 
   - [ ] so i guess we should do same thing with left hand sidebar too..
@@ -122,7 +122,7 @@ const currentView = computed(() => {
 
 
  // SCROLL BUGS
-- [ ] ZS button not scrolling anymore. (was always hacky..)
+- [x] ZS button not scrolling anymore. (was always hacky..)
  - [ ] if someone navigates to say "#tidepools" we should scroll there, (e.g. by going Back) 
  - [ ] -- and make scrolling still go there, to the html section, in the url.
 
@@ -138,14 +138,14 @@ const currentView = computed(() => {
 
 
 // SHADER UPGRADES
- - [ ] replace tree with something better
+ - [x] replace tree with something better
   -- ooh we can go back to wavy hills idea. Although we are now doing with reef...
   -- at least can use sky. maybe clouds too.
   - But man I still love this abstract ring/lumber cut.
   - It could be like a background for the text? Leaving other side open, kind of opposite of Tide pools..
   - maybe brown edges around the edge, narrow borders, really hammer it home.
   - That feels nice. Then a tree grows up in the empty space?
- - [ ] enrich the reef
+ - [x] enrich the reef
  - [ ] don't forgt about reflective pool we had for forest...just didn't quite fit there... really nice though.. Ah well.
  - Actually yeah update the pools maybe, but already super nice.
 

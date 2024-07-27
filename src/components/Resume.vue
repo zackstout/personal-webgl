@@ -20,7 +20,7 @@ import { onMounted, ref } from "vue";
           <h3>Oct. 2018 - Present</h3>
         </div>
         <div>
-          <h4>Web Development Bootcamp TA</h4>
+          <h4>Web Development Bootcamp Teaching Assistant</h4>
           <h2>University of Minnesota</h2>
           <h3>Feb. 2018 - Oct. 2018</h3>
         </div>
@@ -62,9 +62,8 @@ import { onMounted, ref } from "vue";
       </p>
 
       <p>
-        <a href="https://www.linkedin.com/in/zack-stout-01/"
-          >Here I am on LinkedIn.</a
-        >
+        Here I am on
+        <a href="https://www.linkedin.com/in/zack-stout-01/">LinkedIn.</a>
       </p>
     </div>
   </div>

@@ -4,6 +4,7 @@ varying vec2 vUv;
 uniform float uTime;
 uniform float uAspect;
 uniform float uProgress;
+uniform float uIsMobile;
 
 
 // =================================================
@@ -222,13 +223,12 @@ void main()
         float s1 = smoothstep(starTime - starTransition, starTime + offset, uProgress);
         float s2 = smoothstep(starTime + starTransition, starTime + offset, uProgress);
 
-
-
-
         // vec2 ctr = vec2(float(i) / 10. * uAspect, .5);
         vec2 ctr = vec2(1.5 - rand(vec2(i * 30)), rand(vec2(i + 12)));
 
-        ctr.x = ctr.x * .5 + .75;
+        float xOffset = uIsMobile > .5 ? .01 : .75;
+        float xScl = uIsMobile > .5 ? .3 : .5;
+        ctr.x = ctr.x * xScl + xOffset;
         ctr.y = ctr.y * .5 + 0.25;
 
         // Oooh yeah max them POP OUT!
@@ -286,7 +286,25 @@ void main()
     distort = snoise(vec3(20. * vec2(uv.x - .5 * uAspect, uv.y - .5), 1.)) * .2;
     sunSize += mix(0., distort, 1. - ms2);
 
-    mtn = mix(mtn, vec3(0.05), 1. - step(d, sunSize));
+    float drawMtn = 1.;
+
+    // Vapor cuts (cactus)
+    for (int i=0; i < 6; i++){
+      float y = .5 - pow(float(i) / 6., 2.) * .25;
+      y += mix(0., distort * .08, 1. - ms2);
+      float h = .1 + pow(float(i) / 6., 4.) * .005;
+      if (abs(uv.y - y) < h * .05 && distance(uv, vec2(.5 * uAspect, .5)) < sunSize){
+        // discard;
+        drawMtn = 0.;
+        mtn = vec3(.05);
+        break;
+      } 
+      
+    }
+
+    if (drawMtn > .5){
+      mtn = mix(mtn, vec3(0.05), 1. - step(d, sunSize));
+    }
 
 
     // Cool grass-like or city-like things, but not very mountain like...
@@ -331,7 +349,7 @@ void main()
    // ======================================================
 
     // Trees
-    float treeTime = timeInterval * 3.;
+    float treeTime = timeInterval * 2.8;
     float treeTransition = .1;
 
 
@@ -339,18 +357,91 @@ void main()
 
     float ts1 = smoothstep(treeTime - treeTransition, treeTime, uProgress);
     float ts2 = smoothstep(treeTime + treeTransition, treeTime, uProgress);
+
     float timeOffset = cos(uTime * .2 + uv.x * uv.x) * .4;
     vec3 tree = mix(sky, darksky, 1. - uv.y + timeOffset);
+
+
+    // hills
+    float hill = cos(uv.x * 4.) * .1;
+    vec3 hillColor = vec3(.3, .8, .6);
+
+    float hill3 = cos(uv.x * 2.) * .07;
+    float hill3Cut = .4 - uv.y;
+    // make jagged
+    hill3Cut += abs(fract(uv.x * 40.) - .5) * (ts1) * .05;
+    hill3 = step(hill3, hill3Cut);
+    tree = mix(tree, hillColor * .7, hill3);
+
+// This is actually sky
+    // tree = mix(tree, hillColor, 1.2 - uv.y + hill);
+// Whoa freaky 
+    tree = mix(tree, hillColor, .4 - pow(ts1, 20.) - uv.y + hill);
+
+// Now we make the first hill
+
+float hillCut = -.6 + pow(ts1, .02) - uv.y;
+     // make jagged
+    hillCut += abs(fract(uv.x * 20.) - .5) * (ts1) * .1;
+
+    hill = step(hill, hillCut);
+
+    tree = mix(tree, hillColor * .85, hill);
+
+   
+
     // Changing.... to moss....
     // Ok now let's iterate it....
     // TODO: Not really helping
-    vec3 moss1 = vec3(.2, .8, .2);
-    vec3 moss2 = vec3(.4, .9, .1);
+    // vec3 moss1 = vec3(.2, .8, .2);
+    // vec3 moss2 = vec3(.4, .9, .1);
 
-    tree = mix(moss1, moss2, wavelet(uv * 8., (ts1 - ts2) * 12.));
+    // tree = mix(moss1, moss2, wavelet(uv * 8., (ts1 - ts2) * 12.));
     // for (int i=0; i < 2; i++){
     //     tree = mix(tree, moss2, wavelet(uv * 3. * float(i), (ts1-ts2*ts2) * 4.));
     // }
+
+    // Ok scrap this idea and just do like a few lines, jagged sine waves, somehow, absolute values?
+
+    // forest!
+    float limit = (ts1  -.3) * (ts2 +.3);
+    limit = pow(limit, 8.);
+    limit *= 60.;
+    // Lol don't let it get huge
+    limit = min(limit, 20.);
+
+    // for (float i=0.; i < limit; i+=1.){
+    //     float x = .8 + rand(vec2(i)) * .8;
+    //     float y = .2 + rand(vec2(i + 1.)) * .3;
+    //     float w = .005 + rand(vec2(i + 2.)) * .003;
+    //     float h = .008 + rand(vec2(i + 3.)) * .003;
+    //     float hue = .6 + rand(vec2(i + 4.)) * .2;
+    //     w *= 3.;
+    //     h *= 3.;
+    //     vec3 treeColor = hsv2rgb(vec3(hue, .7, 1.));
+    //     if (true){
+    //         // treeColor = mix(treeColor, vec3(.2, .8, .2), .5);
+    //         tree = mix(tree, treeColor, step(abs(uv.x - x), w * 20.*(y - uv.y)) * step(abs(uv.y - y), h));
+    //     }
+    // }
+
+     float hill2 = cos(uv.x * 6.) * .08;
+     float hill2Cut = -.6 + ts2 * .9 - uv.y;
+
+     // make jagged
+    hill2Cut += abs(fract(uv.x * 10.) - .5) * (ts1) * .2;
+
+    hill2 = step(hill2, hill2Cut);
+
+
+    // make jagged? -- huh weird it's just affecting the sky....
+    // when we did it here...
+    // hill2 += abs(fract(uv.x * 10.) - .5) * .8;
+
+
+    tree = mix(tree, hillColor * 1., hill2);
+
+
 
 
 
@@ -367,7 +458,22 @@ void main()
 
     // Cutting between bark tree and tree mosss stuff ..
     // Note that 2.5 doesn't quite work on SD, to show both -- changing to 3 to tarnsition to wood faster
-    tree = mix(tree, treeBg, step(uv.x + uv.y, 5.2 + (pow(ts1, .3) - ts2) * 20.));
+    // tree = mix(tree, treeBg, step(uv.x + uv.y, 5.2 + (pow(ts1, .3) - ts2) * 20.));
+
+
+    vec3 darkbrown = vec3(.3, .2, .1);
+    vec3 tan = vec3(.8, .6, .4);
+    float barkEdge = snoise(vec3(uv * .1, 1. + (ts1 + ts2) * .4));
+    // barkEdge = pow(barkEdge, 3.);
+    barkEdge += snoise(vec3(uv * 50., 1. + (ts1 + ts2) * .4)) * .005;
+
+    float edge = uIsMobile > .5 ? .3 : 1.1;
+    float barkEdge2 = step(barkEdge, edge - uv.x);
+    float barkEdgeTan = step(barkEdge, edge + .01 - uv.x);
+    float barkEdge3 = step(barkEdge, edge + .02 - uv.x);
+    tree = mix( tree, darkbrown, barkEdge3);
+    tree = mix(tree, tan, barkEdgeTan);
+    tree = mix(tree, treeBg, barkEdge2);
 
 
     c += tree * ts1 * ts2;
@@ -441,7 +547,8 @@ void main()
     edgeNoise += snoise(vec3(uv.y * 2., 3., 4. + uProgress * 2.)) * 7.;
 
     // For tide pools on left, uv.x - 1.4 was good here
-    edgeNoise = step(edgeNoise * .005, uv.x - 1.);
+    float rockEdge = uIsMobile > .5 ? .4 : 1.;
+    edgeNoise = step(edgeNoise * .005, uv.x - rockEdge);
     vec3 bg = mix(seaweed, vec3(1.) - vec3(.8,.8,.9), edgeNoise);
 
     float bgNoise = snoise(vec3(uv * 4., 1.));
@@ -489,6 +596,9 @@ void main()
 
     vec3 mid = vec3(.1, .15, .35);
 
+
+    uv.x += snoise(vec3(uv * 20., 1. + ds2 * .1)) * .01;
+
     float waterCut = .5 + sin(uv.x * .9) * (.2 + uProgress * .1);
     waterCut = step(waterCut, .4 + ds2 - uv.y);
 
@@ -506,6 +616,26 @@ void main()
         float brightness = .2 + .6 * float(i) / 6.;
         dive = mix(dive, mid * brightness, wc);
     }
+
+    // starTransition
+
+    for (int i=0; i < 20; i++){
+        float offset = -1. * rand(vec2(i * 7)) * .1;
+        vec2 ctr = vec2(1.5 - rand(vec2(i * 30)), rand(vec2(i + 12)));
+
+        // ctr.x = ctr.x * .5 + .75;
+        // ctr.y = ctr.y * .5 + 0.25;
+
+        // Oooh yeah max them POP OUT!
+        ctr = mix(vec2(.38 * uAspect, .5), ctr, pow(ds2 * 3., 2.));
+
+        float e1 = distance(uv,ctr);
+        e1 = step(e1, .05 + rand(vec2(i)) * 1.);
+        float r = 0.0005 + 0.0015 * rand(vec2(i + 3));
+        vec3 c1 = hsv2rgb(vec3(.1 + .1 * rand(vec2(i)), 1., r / distance(uv, ctr)));
+        c += c1 * e1 * ds2 * (.3 + ds1) * (1.1 - ds2);
+    }
+
     c += dive * ds1 * ds2;
 
     }

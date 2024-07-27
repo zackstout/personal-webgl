@@ -26,6 +26,8 @@ function scrollListen(ev: Event) {
 }
 const myName = "Zack Stout".toUpperCase().split("");
 
+const isMobile = window.innerWidth < 500;
+
 function clickIcon(id: string) {
   gsap.to(scrollWrapper.value, { scrollTo: `#${id}` });
 }
@@ -47,7 +49,7 @@ onMounted(() => {
   >
     <!-- Left icon sidebar: -->
     <div
-      class="fixed left-0 top-0 h-full w-24 flex flex-col items-center justify-center space-y-4"
+      class="fixed left-0 top-0 h-full sidebar flex flex-col items-center justify-center space-y-4"
     >
       <!-- Oooh but not quite... we don't want it at top... I guess we could use same padding hack... or just go to GSAP and/or compute..?? -->
       <!-- Yes padding works! -->
@@ -72,7 +74,7 @@ onMounted(() => {
 
     <!-- Main content: -->
     <div
-      class="flex relative items-start justify-start flex-col w-1/2 ml-40 pb-[50vh]"
+      class="flex relative items-start justify-start flex-col w-1/2 content-container pb-[50vh]"
       ref="mainContent"
     >
       <!-- Intro section (put top padding here so we can jump here via link): -->
@@ -81,7 +83,7 @@ onMounted(() => {
           <!-- <span v-for="c in myName" :key="c">{{ c }}</span> -->
           {{ myName.join("") }}
         </p>
-        <p class="text-2xl opacity-90">Creative Developer</p>
+        <p class="text-2xl opacity-90 leading-tight">Creative Developer</p>
         <div class="leading-tight opacity-80 flex flex-col space-y-3">
           <p>👋 Thanks for stopping by!</p>
           <p>
@@ -121,14 +123,16 @@ onMounted(() => {
             a way, both of these romances began with the stars.
           </p>
 
-          <p>The night sky inspires wonder. It leads to mystery and myth.</p>
+          <p v-if="!isMobile">
+            The night sky inspires wonder. It leads to mystery and myth.
+          </p>
 
-          <p>
+          <p v-if="!isMobile">
             But it also invites analysis: we can chart the orbits of celestial
             bodies -- gorgeous conic sections -- with mathematical precision.
           </p>
 
-          <p>
+          <p v-if="!isMobile">
             The first time I wrote the code to make a circle move in a perfect
             parabolic path across the screen, I was choked with awe.
           </p>
@@ -157,12 +161,12 @@ onMounted(() => {
           alike, because I am terrified of heights.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           You stumble and slide, but you earn each new vista. As you ascend, new
           pathways open up.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           I love to learn, and learning to code (at boot camp, on my own, and
           then on the job) has been no exception. I thrill at drinking in new
           sights, and new ways of seeing.
@@ -174,7 +178,7 @@ onMounted(() => {
       <div id="forests" class="section">
         <p class="text-5xl font-bold uppercase">Forests</p>
         <p class="text-2xl">Growth, and finding patterns</p>
-        <p class="text-md leading-tight">
+        <p class="text-md leading-tight" v-if="!isMobile">
           🌳 I love trees: earth-rooted, but reaching toward the sky, gulping
           sunlight and radiating leaves. And I love forests -- systems of
           interconnected components, each part playing its role in harmony with
@@ -186,13 +190,13 @@ onMounted(() => {
           playing its role in harmony with the others.
         </p> -->
 
-        <p>
+        <p v-if="!isMobile">
           Software development is kind of like what I imagine managing a forest
           to be like. You encourage growth here, burn dead areas away there,
           discourage littering.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           But in software we don't have to choose between lumber and the forest.
           The functional experience can be infused with beauty.
         </p>
@@ -247,7 +251,7 @@ onMounted(() => {
           girlfriend Malika, our dog Apollo, our friends and family.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           I am grateful to work with dedicated and passionate people. I love
           solving problems and refining ideas with others.
         </p>
@@ -264,8 +268,9 @@ onMounted(() => {
           harmonic whole.
         </p> -->
 
-        <p>
-          🔍 I love exploring microcosms, niches, small obsessions. I love
+        <p>🔍 I love exploring microcosms, niches, small obsessions.</p>
+        <p v-if="!isMobile">
+          I love
           <a
             class="p-link"
             href="https://github.com/zackstout/Music-Theory-Guitar"
@@ -278,7 +283,7 @@ onMounted(() => {
           seabird identification, gardening and hiking and
           <i>Sonnets to Orpheus</i>.
         </p>
-        <p>
+        <p v-if="!isMobile">
           <a class="p-link" href="https://github.com/zackstout/learn-flags"
             >Flags of the world</a
           >, checkmating patterns,
@@ -291,7 +296,7 @@ onMounted(() => {
           an understanding that I can inhabit.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           (I also love real tide pools! You never know what you'll find. Each
           community makes a harmonious whole.)
         </p>
@@ -308,7 +313,7 @@ onMounted(() => {
           relax and perceive my surroundings.
         </p>
 
-        <p>
+        <p v-if="!isMobile">
           As we descend, what will we find? Usually, we find ourselves back home
           where we started -- but deepened, enriched. The marrow we have
           deposited becomes loam in the next cycle.
@@ -328,7 +333,7 @@ onMounted(() => {
   <!-- // Use 900 here instead of 400 to increase contrast with water background: -->
 </template>
 
-<style lang="postcss">
+<style scoped lang="postcss">
 .icon {
   @apply w-10 h-10 flex items-center justify-center rounded-full border border-white cursor-pointer opacity-90 hover:opacity-100 hover:scale-[1.05] transition-all;
 }
@@ -339,5 +344,23 @@ onMounted(() => {
 
 .p-link {
   @apply text-blue-900 underline;
+}
+
+.content-container {
+  @apply ml-40;
+}
+
+.sidebar {
+  @apply w-24;
+}
+
+@media (max-width: 500px) {
+  .content-container {
+    @apply ml-20;
+  }
+
+  .sidebar {
+    @apply w-20;
+  }
 }
 </style>

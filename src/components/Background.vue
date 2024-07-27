@@ -50,13 +50,8 @@ function initialize(isUpdating?: boolean) {
 
     // scene.background = new THREE.Color(0x00ff00);
     // const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const size = 2.4;
-    const geometry = new THREE.PlaneGeometry(
-      size * aspectRatio,
-      size,
-      100,
-      100
-    );
+    const size = window.innerWidth < 500 ? 1.8 : 2.4;
+    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 2, 2);
     const material = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -64,6 +59,7 @@ function initialize(isUpdating?: boolean) {
         uTime: new THREE.Uniform(0),
         uAspect: new THREE.Uniform(aspectRatio),
         uProgress: new THREE.Uniform(props.progress),
+        uIsMobile: new THREE.Uniform(window.innerWidth < 500 ? 1 : 0),
       },
       transparent: true,
     });
@@ -125,6 +121,8 @@ const bgStyle = computed<StyleValue>(() => {
     width: "100%",
     height: "100%",
     zIndex: 1,
+    // Omg the magic line for mobile
+    overflowX: "hidden",
   };
 });
 
