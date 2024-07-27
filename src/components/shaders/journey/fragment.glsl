@@ -600,7 +600,9 @@ float hillCut = -.6 + pow(ts1, .02) - uv.y;
     vec3 mid = vec3(.1, .15, .35);
 
 
-    uv.x += snoise(vec3(uv * 20., 1. + ds2 * .1)) * .01;
+    // Adds like a watery effect but maybe let's cut it for performance...
+    // Yeah it's cool but it's just not worth it
+    // uv.x += snoise(vec3(uv * 20., 1. + ds2 * .1)) * .01;
 
     float waterCut = .5 + sin(uv.x * .9) * (.2 + uProgress * .1);
     waterCut = step(waterCut, .4 + ds2 - uv.y);
@@ -620,8 +622,7 @@ float hillCut = -.6 + pow(ts1, .02) - uv.y;
         dive = mix(dive, mid * brightness, wc);
     }
 
-    // starTransition
-
+    // stars
     for (int i=0; i < 20; i++){
         float offset = -1. * rand(vec2(i * 7)) * .1;
         vec2 ctr = vec2(1.5 - rand(vec2(i * 30)), rand(vec2(i + 12)));

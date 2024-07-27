@@ -3,6 +3,92 @@ import { eventBus } from "../eventbus";
 import { onMounted, ref } from "vue";
 
 // TODO: Use actual svg/html to render the final output, not an image!
+// TODO: do we need 2nd circle for mask? can we use original as mask?
+
+const makeMoonPhases = () => {
+  // const svg = document.querySelector("svg");
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+  for (let j = 0; j < 7; j++) {
+    for (let i = 0; i < 4; i++) {
+      const moon = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      moon.setAttribute("cx", 50 + i * 100);
+      moon.setAttribute("cy", 50 + j * 100);
+      moon.setAttribute("r", 35);
+      moon.setAttribute("fill", "white");
+
+      const moonMask = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "mask"
+      );
+      moonMask.setAttribute("id", `moon-mask-${i}-${j}`);
+      moonMask.appendChild(moon);
+
+      svg.appendChild(moonMask);
+      moonMask.setAttribute("id", `moon-mask-${i}-${j}`);
+
+      const realMoon = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+
+      const dayCounter = j * 4 + i;
+
+      let invert = false;
+      if (dayCounter >= 7 && dayCounter <= 20) {
+        invert = true;
+      }
+
+      realMoon.setAttribute("cx", 50 + i * 100);
+      realMoon.setAttribute("cy", 50 + j * 100);
+      realMoon.setAttribute("r", 35);
+      realMoon.setAttribute("fill", invert ? "white" : "black");
+      realMoon.setAttribute("stroke", "white");
+      realMoon.setAttribute("stroke-width", 2);
+
+      svg.appendChild(realMoon);
+
+      const dayPercent = dayCounter / 28;
+      const xOffsetScale = Math.tan(dayPercent * 2 * Math.PI);
+      let xOffset = 50 * xOffsetScale;
+      let moonShadowRadius = Math.sqrt(xOffset * xOffset + 50 * 50);
+
+      if (xOffset > 100_000) {
+        xOffset = -100_000;
+        moonShadowRadius = 100_000;
+      }
+
+      const moonShadow = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      moonShadow.setAttribute("cx", 50 + i * 100 + xOffset);
+      moonShadow.setAttribute("cy", 50 + j * 100);
+      moonShadow.setAttribute("r", moonShadowRadius);
+      moonShadow.setAttribute("fill", invert ? "black" : "white");
+      // moonShadow.setAttribute("mask", `url(#moon-mask-${i}-${j})`);
+
+      // what if we just use original moon circle as mask?? (update id) -- does not work!
+      moonShadow.setAttribute("mask", `url(#moon-mask-${i}-${j})`);
+      svg.appendChild(moonShadow);
+    }
+  }
+  return svg;
+};
+
+onMounted(() => {
+  const existingSvg = document.getElementById("moon-svg");
+  if (existingSvg) return;
+  const svg = makeMoonPhases();
+  svg.id = "moon-svg";
+  // console.log("svg", svg);
+  svg.style.width = "800";
+  svg.style.height = "800";
+  document.getElementById("moon-blog")?.appendChild(svg);
+});
 </script>
 
 <template>
@@ -31,7 +117,7 @@ import { onMounted, ref } from "vue";
       <h1>Lunar Phases: Let's Draw the Moon</h1>
       <h2>July 26, 2024</h2>
 
-      <div class="flex flex-col space-y-4 mb-8">
+      <div id="moon-blog" class="flex flex-col space-y-8 mb-8">
         <p>
           I found a hoodie recently with the phases of the moon depicted on the
           front. I love it. I wanted to recreate the design myself.
@@ -125,7 +211,7 @@ import { onMounted, ref } from "vue";
 
         <p>
           So I took a guess that we want to let D vary with the tangent of the
-          parameterized variable.
+          parameterized variable. That's our tentative solution to part (a).
         </p>
         <!-- <p>
           Since trigonometric functions tend to complete a full cycle between 0
@@ -134,11 +220,16 @@ import { onMounted, ref } from "vue";
 
         <p>
           The final part of the problem is to handle SVG masking to let us
-          render the circles with the "shadow" regions cut out. In my approach,
-          we start with either a black or white circle (more on that in a
-          second). Then we draw a second circle over the top of it, filled with
-          the inverted color. But this second circle must be "masked" so that we
-          only show the part of it that overlaps with the original circle.
+          render the circles with the "shadow" regions cut out. (I suppose WebGL
+          would have worked well for this purpose too.)
+        </p>
+        <p>
+          In my approach, we start with either a black or white circle (more on
+          that in a second). Then we draw a second circle over the top of it,
+          fill it with the opposite color, and offset and scale it by a certain
+          amount (which we found in (a) and (b)). But this second circle must be
+          "masked" so that we only show the part of it that overlaps with the
+          original circle.
         </p>
         <p>
           The final wrinkle was that we need to swap between using a black or
@@ -147,11 +238,21 @@ import { onMounted, ref } from "vue";
         </p>
 
         <p>
+          So in code, we had a dynamically generated SVG (created with a nested
+          loop), each "cell" of which contained three elements: a circle to
+          represent the moon, a mask element (containin a circle coinciding with
+          the one), and a circle (offset and scaled) to represent the shadow (or
+          lit part), who used the masking element as a mask. (We couldn't just
+          re-use the moon circle as the mask, because of the fill-related
+          wrinkle mentioned above.)
+        </p>
+
+        <p>
           Anyway, this is the result we ended up with. Not perfect, but close
           enough for now.
         </p>
 
-        <img src="../assets/blog/moon/4.png" />
+        <!-- <img src="../assets/blog/moon/4.png" /> -->
       </div>
     </div>
 
@@ -169,6 +270,9 @@ h2 {
 
 img {
   max-width: 30vw;
-  @apply py-6;
+}
+
+#moon-blog {
+  @apply text-lg;
 }
 </style>
