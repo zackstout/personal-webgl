@@ -292,8 +292,8 @@ onMounted(() => {
           >, tilings of the plane,
           <a class="p-link" href="https://github.com/zackstout/aoc-2023"
             >competitive coding</a
-          >. I love to get lost in small worlds, making connections and building
-          an understanding that I can inhabit.
+          >, generative art. I love to get lost in small worlds, making
+          connections and building an understanding that I can inhabit.
         </p>
 
         <p v-if="!isMobile">
@@ -303,7 +303,7 @@ onMounted(() => {
       </div>
 
       <!-- Sixth section: -->
-      <div id="depths" class="section mb-40">
+      <div id="depths" class="section mb-64">
         <p class="text-5xl font-bold uppercase">The Depths</p>
         <p class="text-2xl">Diving below</p>
         <p class="text-md leading-tight">
@@ -314,12 +314,15 @@ onMounted(() => {
         </p>
 
         <p v-if="!isMobile">
-          As we descend, what will we find? Usually, we find ourselves back home
+          What lies ahead? What slumbers in the depths? All we can do is trust
+          that in our darkest moments...
+
+          <!-- As we descend, what will we find? Usually, we find ourselves back home
           where we started -- but deepened, enriched. The marrow we have
-          deposited becomes loam in the next cycle.
+          deposited becomes loam in the next cycle. -->
         </p>
 
-        <p>In our darkest moments, the light returns.</p>
+        <p class="pt-24">...the light will return.</p>
       </div>
 
       <div

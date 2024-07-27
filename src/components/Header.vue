@@ -68,13 +68,12 @@ function activeClass(page: string) {
         :class="activeClass('resume')"
         >Resume</a
       >
-      <a
+      <!-- <a
         href="#/photos"
         class="cursor-pointer hover:opacity-100"
         :class="activeClass('photos')"
         >Photos</a
-      >
-      <!-- <div class="cursor-pointer opacity-80 hover:opacity-100">Contact</div> -->
+      > -->
     </div>
   </div>
 </template>
