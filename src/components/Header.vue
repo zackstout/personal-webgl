@@ -2,6 +2,8 @@
 import { eventBus } from "../eventbus";
 import { computed, onMounted, ref } from "vue";
 
+// Holy shit, what, it was using the magic word "container" for class name.... what???? omg I don't believe it. such a relief.
+
 function scrollTop() {
   // If we are in "journey"... then we scroll.
   // But otherwise we need to change page.
@@ -26,11 +28,22 @@ window.addEventListener("hashchange", () => {
 function activeClass(page: string) {
   return view.value.includes(page) ? "opacity-100" : "opacity-60";
 }
+
+// const headerStyle = {
+//   backgroundColor: isJourney.value ? "transparent" : "black",
+//   width: `${window.innerWidth * 1}px`,
+// };
+
+// const windowWidth = ref(window.innerWidth);
+
+onMounted(() => {
+  console.log(window.innerWidth);
+});
 </script>
 
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-[15vh] flex justify-between items-center z-[1000] container"
+    class="fixed top-0 left-0 w-full h-[15vh] flex justify-between items-center z-[1000] header"
   >
     <!-- Logo thing: -->
     <div
@@ -54,8 +67,8 @@ function activeClass(page: string) {
         href="#/blog"
         class="cursor-pointer hover:opacity-100"
         :class="activeClass('blog')"
-        >Blog</a
-      >
+        >Blog
+      </a>
       <a
         href="#/projects"
         class="cursor-pointer hover:opacity-100"
@@ -82,15 +95,15 @@ function activeClass(page: string) {
 .nav {
   @apply flex justify-center items-center space-x-8 uppercase;
 }
-.container {
+.header {
   @apply px-16;
 }
 @media (max-width: 500px) {
   .nav {
-    display: none;
+    @apply space-x-4;
   }
-  .container {
-    @apply px-4;
+  .header {
+    @apply px-8;
   }
 }
 </style>

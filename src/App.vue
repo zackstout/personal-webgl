@@ -116,6 +116,9 @@ const currentView = computed(() => {
 - [ ] clean up all the paragraphs, make them all opacity-80 and leading-tight with container div
 
 
+- [ ] figure out why the header won't work
+
+
  // CREATIVE
    - [ ] update tree/forest and reef text. come on lol.
  - [ ] paring down photos to like 3 per trip and writing something about each would be best.
@@ -159,14 +162,19 @@ const currentView = computed(() => {
 // onMounted(() => {
 //   console.log("mounted", mainContent.value);
 // });
+
+// Note wrapper does nothing... trying to make header stretch to full width...
 </script>
 
 <template>
-  <!-- Header: -->
+  <div class="w-full h-full relative">
+    <component :is="currentView" />
+    <!-- <Journey /> -->
 
-  <component :is="currentView" />
-  <!-- <Journey /> -->
-  <Header />
+    <!-- Header: -->
+
+    <Header />
+  </div>
 </template>
 
 <style lang="postcss">
