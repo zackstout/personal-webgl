@@ -12,6 +12,8 @@ const props = defineProps<{
   progress: number;
 }>();
 
+const isMobile = window.innerWidth < 500;
+
 // ====================
 
 const color = new THREE.Color("rgb(10, 10, 10)");
@@ -91,6 +93,8 @@ function initialize(isUpdating?: boolean) {
 
       // Render
       renderer.render(scene, camera);
+
+      if (isMobile) return;
 
       caf = window.requestAnimationFrame(tick);
     };

@@ -327,10 +327,12 @@ a {
 @media (max-width: 500px) {
   .main {
     @apply px-8;
+    max-width: 90vw;
+    overflow-x: hidden;
   }
 
   img {
-    max-width: 80vw;
+    max-width: 70vw;
   }
 }
 </style>

@@ -88,7 +88,7 @@ li {
   @apply px-40;
 }
 
-media (max-width: 500px) {
+@media (max-width: 500px) {
   .main {
     @apply px-8;
   }
