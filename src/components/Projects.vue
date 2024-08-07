@@ -50,18 +50,21 @@ function scrollListen(ev: Event) {
           I enjoy working with <code>svg</code> and the HTML
           <code>canvas</code> element.
         </li>
+        <li>
+          I have been bewitched by
+          <a href="https://webglfundamentals.org/">WebGL</a>. It seems to live
+          right at the crossroads of math and art. I came to it through some
+          combination of plans and happy accidents -- serendipity. That
+          structure is mirrored in the way I use it. Most of what happens when I
+          use it surprises me. I'm learning to wrangle its arcana. It's what I
+          used to create the backgrounds for each page on this site.
+        </li>
       </ul>
 
       <p>
         I love crafting beautiful and engaging animations and experiences. I
         like to simulate natural processes with programs, and more generally
         create art with code.
-      </p>
-      <p>
-        I have fallen in love with
-        <a href="https://webglfundamentals.org/">WebGL</a>. Its dark arcana and
-        mysterious rites have bewitched me. It seems to live right at the
-        crossing roads of math and art.
       </p>
 
       <br />

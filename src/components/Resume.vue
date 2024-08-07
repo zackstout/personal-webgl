@@ -38,40 +38,40 @@ const isMobile = window.innerWidth < 500;
             <h3>Oct. 2018 - Present</h3>
             <ul>
               <li>
-                Developed and maintained web applications for digital signage
+                Developed and maintained web applications for digital signage:
               </li>
               <ul class="pl-12">
                 <li>
                   Built visually engaging infotainment applications with Vue.js,
-                  TypeScript, and Tailwind CSS
+                  TypeScript, and Tailwind.
                 </li>
                 <li>
-                  Created bespoke animations for weather icons and more with
-                  GSAP
+                  Created bespoke animations for weather icons, custom projects,
+                  and more with GSAP.
                 </li>
                 <li>
-                  Worked with designers to hone ideas and craft beautiful
-                  results
+                  Worked closely with designers to hone ideas and craft
+                  beautiful results.
                 </li>
               </ul>
               <li>
                 Developed a drag-and-drop digital signage content builder that
                 supports dynamic content from a variety of data sources
-                (Screenfeed Connect)
+                (Screenfeed Connect):
               </li>
               <ul class="pl-12">
                 <li>
                   Developed core functionality for enabling the creation of
-                  dynamic content
+                  dynamic content.
                 </li>
                 <li>
                   Participated in and sometimes led design decisions on key
                   aspects of the user interface for building content and wiring
-                  up dynamic data
+                  up dynamic data.
                 </li>
                 <li>
                   Worked closely with backend developers to craft the app's
-                  architecture
+                  architecture.
                 </li>
               </ul>
             </ul>
@@ -83,7 +83,7 @@ const isMobile = window.innerWidth < 500;
             <ul>
               <li>
                 Helped students understand the core concepts of programming and
-                web development
+                web development.
               </li>
             </ul>
           </div>
@@ -98,10 +98,10 @@ const isMobile = window.innerWidth < 500;
             <h2>Prime Digital Academy</h2>
             <h3>Aug. 2017 - Jan. 2018</h3>
             <ul>
-              <li>Opened my eyes to the wonderful world of web development</li>
+              <li>Opened my eyes to the wonderful world of web development.</li>
               <li>
                 Focused on JavaScript, AngularJS, Node.js, Express and
-                PostgreSQL
+                PostgreSQL.
               </li>
             </ul>
           </div>
@@ -113,9 +113,11 @@ const isMobile = window.innerWidth < 500;
             <ul>
               <li>
                 Completed my four-year degree, focused on ways to lose arguments
-                and miscount things
+                and miscount things.
               </li>
-              <li>Worked as a math tutor for calculus and analysis students</li>
+              <li>
+                Worked as a math tutor for calculus and analysis students.
+              </li>
             </ul>
           </div>
           <div>
@@ -126,17 +128,17 @@ const isMobile = window.innerWidth < 500;
             <ul>
               <li>
                 Completed two year college centered around labor, academics and
-                self-governance in the high desert of California
+                self-governance in the high desert of California.
               </li>
               <li>
                 Served as the president of the student body for the spring term
                 of 2012, and as the secretary for 3 terms which is longer than
                 anyone I know, and while we're at it, a dishwasher for 3 terms,
-                with 2 terms in the dairy; too many roles to detail
+                with 2 terms in the dairy; too many roles to detail.
               </li>
               <li>
                 Learned a lot about communication, empathy and working with
-                others -- much of which didn't sink in until much later
+                others -- most of which didn't sink in until much later.
               </li>
             </ul>
           </div>
