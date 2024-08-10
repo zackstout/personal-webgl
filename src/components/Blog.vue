@@ -120,7 +120,7 @@ onMounted(() => {
   <div class="h-full w-full relative">
     <BlogBackground :progress="progress" />
     <div
-      class="w-full h-full flex flex-col justify-start items-start overflow-scroll absolute inset-0 z-[5] main py-40"
+      class="w-full h-full flex flex-col justify-start items-start overflow-scroll absolute inset-0 z-[5] main pb-40 top-padding"
       ref="mainContent"
       @scroll="scrollListen"
     >

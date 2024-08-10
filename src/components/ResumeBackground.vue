@@ -43,10 +43,10 @@ function initialize(isUpdating?: boolean) {
 
     // scene.background = new THREE.Color(0x00ff00);
     // const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const size = window.innerWidth < 500 ? 1.8 : 2.4;
+    const size = window.innerWidth < 500 ? 1.5 : 2.4;
 
     // Oh wow it kind of looks like with more.... yeah idk man, 20 was cool. 8 is cool. I liked 2 too.
-    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 20, 20);
+    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 80, 80);
     const material = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,

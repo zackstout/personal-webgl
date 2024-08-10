@@ -18,7 +18,7 @@ function scrollListen(ev: Event) {
   <div class="w-full h-full relative">
     <ProjectsBackground :progress="progress" />
     <div
-      class="w-full h-full flex justify-start items-start pt-40 pb-24 flex-col space-y-4 overflow-scroll absolute inset-0 z-[5] main"
+      class="top-padding w-full h-full flex justify-start items-start pb-24 flex-col space-y-4 overflow-scroll absolute inset-0 z-[5] main"
       ref="mainContent"
       @scroll="scrollListen"
     >

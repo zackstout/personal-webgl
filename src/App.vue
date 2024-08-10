@@ -183,4 +183,14 @@ body {
   transition-duration: 50ms;
   background: rgb(10, 10, 10);
 }
+
+.top-padding {
+  @apply pt-40;
+}
+
+@media (max-width: 500px) {
+  .top-padding {
+    @apply pt-28;
+  }
+}
 </style>

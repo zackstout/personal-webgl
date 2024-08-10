@@ -22,7 +22,7 @@ const isMobile = window.innerWidth < 500;
 
     <div
       ref="mainContent"
-      class="w-full h-full flex flex-col justify-start items-start pt-40 pb-24 overflow-scroll absolute inset-0 z-[5] main"
+      class="w-full h-full flex flex-col justify-start items-start top-padding pb-24 overflow-scroll absolute inset-0 z-[5] main"
       @scroll="scrollListen"
     >
       <div class="text-5xl uppercase font-bold">resume</div>
