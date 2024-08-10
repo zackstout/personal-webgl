@@ -27,7 +27,7 @@ function initialize(isUpdating?: boolean) {
       bg.value?.appendChild(canvas);
     }
 
-    // console.log("Init,", color);
+    console.log("Init, is mobile,", window.innerWidth < 500 ? 1 : 0);
 
     canvas.width = window.innerWidth * window.devicePixelRatio;
     canvas.height = window.innerHeight * window.devicePixelRatio;
@@ -46,7 +46,7 @@ function initialize(isUpdating?: boolean) {
     const size = window.innerWidth < 500 ? 1.8 : 2.4;
 
     // Oh wow it kind of looks like with more.... yeah idk man, 20 was cool. 8 is cool. I liked 2 too.
-    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 3, 3);
+    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 20, 20);
     const material = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,

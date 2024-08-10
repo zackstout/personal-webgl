@@ -11,7 +11,7 @@ void main()
     // Wow changing this is nuts, the position.y scaler... up to 70...
     newPos.y += scl * pow(sin(position.x * 3.0 + position.y * 31.0), 1.);
 
-    newPos.x += scl  * 0. * pow(sin(position.x * .2 + position.y * 2.0 + uProgress), 1.);
+    newPos.x += scl  * 0. * pow(sin(position.x * .2 + position.y * 2.0 + uProgress * 0.), 1.);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
     vUv = uv;
