@@ -365,5 +365,9 @@ onMounted(() => {
   .sidebar {
     @apply w-20;
   }
+
+  .section:first-child {
+    @apply pt-32;
+  }
 }
 </style>

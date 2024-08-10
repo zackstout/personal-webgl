@@ -399,18 +399,23 @@ li:first-child {
 
 .main {
   @apply px-40;
+  overflow-x: hidden;
+}
+
+.post {
+  max-width: 70vw;
 }
 
 code {
   @apply p-2 w-[100vw];
   background: rgba(0, 0, 0, 0.5);
+  max-width: 70vw;
 }
 
 @media (max-width: 500px) {
   .main {
     @apply px-8;
     max-width: 100vw;
-    overflow-x: hidden;
   }
 
   .post {
