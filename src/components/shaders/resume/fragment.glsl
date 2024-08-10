@@ -1,5 +1,7 @@
 varying vec2 vUv;
 
+precision mediump float;
+
 void main()
 {
     vec2 uv = vUv;

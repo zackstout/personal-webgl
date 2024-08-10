@@ -45,7 +45,7 @@ function initialize(isUpdating?: boolean) {
 
     // ====================
 
-     scene = new THREE.Scene();
+    scene = new THREE.Scene();
     let aspectRatio = window.innerWidth / window.innerHeight;
 
     scene.background = color;
@@ -53,7 +53,7 @@ function initialize(isUpdating?: boolean) {
     // scene.background = new THREE.Color(0x00ff00);
     // const geometry = new THREE.BoxGeometry(2, 2, 2);
     const size = window.innerWidth < 500 ? 1.8 : 2.4;
-    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 2, 2);
+    const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 1, 1);
     const material = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -63,10 +63,10 @@ function initialize(isUpdating?: boolean) {
         uProgress: new THREE.Uniform(props.progress),
         uIsMobile: new THREE.Uniform(window.innerWidth < 500 ? 1 : 0),
       },
-      transparent: true,
+      transparent: false,
     });
     // This seems to look better in most cases:
-    material.blending = THREE.AdditiveBlending;
+    // material.blending = THREE.AdditiveBlending;
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
@@ -110,7 +110,6 @@ function initialize(isUpdating?: boolean) {
       //   }
     };
 
-    // some change?
     tick();
   }
 }

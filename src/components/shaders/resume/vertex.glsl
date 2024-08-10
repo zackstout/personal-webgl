@@ -1,6 +1,8 @@
 varying vec2 vUv;
 uniform float uProgress;
 
+precision mediump float;
+
 void main()
 {
     vec3 newPos = position;
