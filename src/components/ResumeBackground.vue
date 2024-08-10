@@ -45,7 +45,8 @@ function initialize(isUpdating?: boolean) {
 
     // scene.background = new THREE.Color(0x00ff00);
     // const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const size = window.innerWidth < 500 ? 1.5 : 2.4;
+    // 2.74 is nice
+    const size = window.innerWidth < 500 ? 1.5 : 1.6;
 
     // Oh wow it kind of looks like with more.... yeah idk man, 20 was cool. 8 is cool. I liked 2 too.
     const geometry = new THREE.PlaneGeometry(size * aspectRatio, size, 80, 80);
@@ -125,12 +126,12 @@ function updateBG() {
 
 onMounted(() => {
   initialize();
-  window.addEventListener("resize", updateBG);
+  // window.addEventListener("resize", updateBG);
   // console.log("Mounted");
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateBG);
+  // window.removeEventListener("resize", updateBG);
 
   if (caf) {
     window.cancelAnimationFrame(caf);
