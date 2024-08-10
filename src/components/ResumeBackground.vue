@@ -3,7 +3,9 @@ import { StyleValue, computed, onBeforeUnmount, onMounted, ref } from "vue";
 import * as THREE from "three";
 import vertexShader from "./shaders/resume/vertex.glsl";
 import fragmentShader from "./shaders/resume/fragment.glsl";
+import { clearThree } from "../utils";
 
+let scene: any = null;
 const bg = ref<HTMLDivElement | null>(null);
 
 let canvas: HTMLCanvasElement;
@@ -36,7 +38,7 @@ function initialize(isUpdating?: boolean) {
 
     // ====================
 
-    const scene = new THREE.Scene();
+    scene = new THREE.Scene();
     let aspectRatio = window.innerWidth / window.innerHeight;
 
     scene.background = color;
@@ -133,6 +135,8 @@ onBeforeUnmount(() => {
   if (caf) {
     window.cancelAnimationFrame(caf);
   }
+
+  clearThree(scene);
 });
 </script>
 <template>

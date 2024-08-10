@@ -190,7 +190,7 @@ body {
 
 @media (max-width: 500px) {
   .top-padding {
-    @apply pt-28;
+    @apply pt-32;
   }
 }
 </style>
