@@ -96,9 +96,9 @@ function initialize(isUpdating?: boolean) {
       // Render
       renderer.render(scene, camera);
 
-      if (isMobile) return;
+      // if (isMobile) return;
 
-      caf = window.requestAnimationFrame(tick);
+      // caf = window.requestAnimationFrame(tick);
     };
 
     tick();
