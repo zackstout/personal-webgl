@@ -31,7 +31,7 @@ const isMobile = window.innerWidth < 500;
         <hr />
 
         <h1>Experience</h1>
-        <div class="flex flex-col space-y-6 pl-8">
+        <div class="content-container">
           <div>
             <h4>Front End Developer</h4>
             <h2>Screenfeed</h2>
@@ -40,7 +40,7 @@ const isMobile = window.innerWidth < 500;
               <li>
                 Developed and maintained web applications for digital signage:
               </li>
-              <ul class="pl-12">
+              <ul class="inner-list">
                 <li>
                   Built visually engaging infotainment applications with Vue.js,
                   TypeScript, and Tailwind.
@@ -59,7 +59,7 @@ const isMobile = window.innerWidth < 500;
                 supports dynamic content from a variety of data sources
                 (Screenfeed Connect):
               </li>
-              <ul class="pl-12">
+              <ul class="inner-list">
                 <li>
                   Developed core functionality for enabling the creation of
                   dynamic content.
@@ -91,7 +91,7 @@ const isMobile = window.innerWidth < 500;
 
         <hr />
         <h1 class="mt-4">Education</h1>
-        <div class="flex flex-col space-y-6 pl-8">
+        <div class="content-container">
           <div>
             <h4>Full-stack Software Development Bootcamp</h4>
 
@@ -201,9 +201,29 @@ ul {
   @apply px-40;
 }
 
+.inner-list {
+  @apply pl-12;
+}
+
+.content-container {
+  @apply flex flex-col space-y-6 pl-8;
+}
+
 @media (max-width: 500px) {
   .main {
     @apply px-8;
+  }
+
+  li {
+    @apply ml-8 pl-0;
+  }
+
+  .inner-list {
+    @apply pl-6;
+  }
+
+  .content-container {
+    @apply pl-0;
   }
 }
 </style>

@@ -53,11 +53,8 @@ function scrollListen(ev: Event) {
         <li>
           I have been bewitched by
           <a href="https://webglfundamentals.org/">WebGL</a>. It seems to live
-          right at the crossroads of math and art. I came to it through some
-          combination of plans and happy accidents -- serendipity. That
-          structure is mirrored in the way I use it. Most of what happens when I
-          use it surprises me. I'm learning to wrangle its arcana. It's what I
-          used to create the backgrounds for each page on this site.
+          right at the crossroads of math and art. It's what I used to create
+          the backgrounds for each page on this site.
         </li>
       </ul>
 
