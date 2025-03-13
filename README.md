@@ -1,5 +1,15 @@
 # Personal Site
 
+It was a ton of fun to build the fragment shader that powers the background for my [personal landing page](https://zackstout.github.io/personal-webgl/).
+
+## Screenshots
+
+![personal0](images/personal0.png)
+![personal1](images/personal1.png)
+![personal2](images/personal2.png)
+![personal3](images/personal3.png)
+![personal4](images/personal4.png)
+
 ### Compiles and hot-reloads for development
 
 ```
